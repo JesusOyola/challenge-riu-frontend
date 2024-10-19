@@ -40,11 +40,11 @@ jobs:
 
       # Route file renaming
       - name: rename index for routing
-        run: mv dist/heroes-app/index.html dist/heroes-app/404.html
+        run: mv dist/heroes-app/browser/index.html dist/heroes-app/browser/404.html
         # Deploy to github pages
       - name: Deploy to pages
         uses: crazy-max/ghaction-github-pages@v4.0.0
         with:
-          build_dir: dist/heroes-app
+          build_dir: dist/heroes-app/browser
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
