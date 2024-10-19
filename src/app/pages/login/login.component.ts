@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
         `User ${this.loginForm.controls['email'].value} created`,
         'User created'
       );
+      this.loginForm.reset()
 
       this.router.navigate([`/${RouterPathNames.home}`]);
     } else if (!this.loginForm.invalid && userAlreadyCreate !== null) {
