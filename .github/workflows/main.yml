@@ -6,10 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
-
+    branches: ["main"]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -31,20 +30,21 @@ jobs:
           node-version: 20
         # Install dependencies
       - name: Install dependencies
-        run: npm install 
-        
+        run: npm install
+
       # Build app for production
       - name: Build Angular app
         run: npm run build:prod
+      - name: List dist folder
+        run: ls -R dist
+
       # Route file renaming
       - name: rename index for routing
-        run: mv dist/heroes-app/index.html dist/heroes-app/404.html 
-       # Deploy to github pages
+        run: mv dist/heroes-app/index.html dist/heroes-app/404.html
+        # Deploy to github pages
       - name: Deploy to pages
         uses: crazy-max/ghaction-github-pages@v4.0.0
         with:
           build_dir: dist/heroes-app
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-      
