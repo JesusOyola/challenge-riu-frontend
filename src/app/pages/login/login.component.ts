@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { User } from '../../core/auth/interface/user';
 import { LoginService } from '../../core/services/login.service';
 import { RouterPathNames } from '../../enum/router-path-names';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private readonly fb: FormBuilder,
+    private toastr: ToastrService,
     private router: Router,
     private loginService: LoginService
   ) {}
@@ -53,12 +55,25 @@ export class LoginComponent implements OnInit {
         userTransformData
       );
       this.loginService.setUser(this.loginForm.get('email')?.value);
+      this.toastr.success(
+        `User ${this.loginForm.controls['email'].value} created`,
+        'User created'
+      );
 
       this.router.navigate([`/${RouterPathNames.home}`]);
     } else if (!this.loginForm.invalid && userAlreadyCreate !== null) {
       this.loginService.setUser(this.loginForm.get('email')?.value);
+      this.toastr.success(
+        `User ${this.loginForm.controls['email'].value} Logged`,
+        'User Logged'
+      );
 
       this.router.navigate([`/${RouterPathNames.home}`]);
+    }else {
+      this.toastr.warning(
+        `Verify that your email and password are correct.`,
+        'Invalid Credentials'
+      );
     }
   }
 }
