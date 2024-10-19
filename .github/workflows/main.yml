@@ -35,8 +35,10 @@ jobs:
         
       # Build app for production
       - name: Build Angular app
-        run: npm run build
-
+        run: npm run build:prod
+      # Route file renaming
+      - name: rename index for routing
+        run: mv dist/challenge-riu-frontend/index.html dist/challenge-riu-frontend/404.html 
        # Deploy to github pages
       - name: Deploy to pages
         uses: crazy-max/ghaction-github-pages@v4.0.0
