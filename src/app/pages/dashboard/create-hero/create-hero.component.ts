@@ -10,11 +10,12 @@ import { MaterialModule } from '../../../shared/material/material.module';
 import { HeroesService } from '../../../shared/service/heroes.service';
 import { Router } from '@angular/router';
 import { RouterPathNames } from '../../../enum/router-path-names';
+import { UppercaseDirective } from '../../../shared/uppercase.directive';
 
 @Component({
   selector: 'app-create-hero',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule],
+  imports: [MaterialModule, ReactiveFormsModule,UppercaseDirective],
   templateUrl: './create-hero.component.html',
   styleUrl: './create-hero.component.scss',
 })
@@ -40,7 +41,12 @@ export default class CreateHeroComponent implements OnInit {
 
   onSubmit() {
     if (this.heroForm.valid) {
-      this.heroesService.createHero(this.heroForm.value);
+      const heroName = this.heroForm.value.superhero.toUpperCase();
+      const heroData = {
+        ...this.heroForm.value,
+        superhero: heroName
+      }
+      this.heroesService.createHero(heroData);
       this.toastr.success(
         `Hero ${this.heroForm.controls['superhero'].value} Created`,
         'Hero Created'

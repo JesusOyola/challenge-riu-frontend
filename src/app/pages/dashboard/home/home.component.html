@@ -1,13 +1,18 @@
 <main class="home-container">
-  <mat-form-field>
-    <mat-label>Search hero</mat-label>
-    <input
-      matInput
-      (keyup)="applyFilter($event)"
-      placeholder="Hero name"
-      #input
-    />
-  </mat-form-field>
+  <div class="filter-container">
+    <mat-form-field>
+      <mat-label>Search hero</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Hero name"
+        #input
+      />
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="redirectToCreateHero()">
+      Add New Hero
+    </button>
+  </div>
 
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
@@ -53,13 +58,6 @@
           <div class="example-button-row">
             <button
               mat-flat-button
-              color="primary"
-              (click)="redirectToCreateHero()"
-            >
-              Add
-            </button>
-            <button
-              mat-flat-button
               color="accent"
               (click)="redirectToEditHero(hero)"
             >
@@ -68,7 +66,6 @@
             <button
               mat-flat-button
               color="warn"
-              
               (click)="openDialog(hero.id, hero.superhero)"
             >
               Delete
@@ -94,4 +91,3 @@
     ></mat-paginator>
   </div>
 </main>
-

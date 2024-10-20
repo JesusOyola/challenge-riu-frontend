@@ -11,11 +11,12 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { RouterPathNames } from '../../../enum/router-path-names';
 import { Hero } from '../../../shared/interface/hero';
+import { UppercaseDirective } from '../../../shared/uppercase.directive';
 
 @Component({
   selector: 'app-edit-hero',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule],
+  imports: [MaterialModule, ReactiveFormsModule,UppercaseDirective],
   templateUrl: './edit-hero.component.html',
   styleUrl: './edit-hero.component.scss',
 })
@@ -42,7 +43,12 @@ export default class EditHeroComponent {
 
   onSubmit() {
     if (this.heroForm.valid) {
-      this.heroesService.editHero(this.heroForm.value);
+      const heroName = this.heroForm.value.superhero.toUpperCase();
+      const heroData = {
+        ...this.heroForm.value,
+        superhero: heroName
+      }
+      this.heroesService.editHero(heroData);
       this.toastr.success(
         `Hero ${this.heroForm.controls['superhero'].value} Updated`,
         'Hero Updated'
