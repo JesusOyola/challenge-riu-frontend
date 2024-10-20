@@ -9,11 +9,14 @@ import { HeroesService } from '../../../shared/service/heroes.service';
 import { Router } from '@angular/router';
 import { RouterPathNames } from '../../../enum/router-path-names';
 import { ToastrService } from 'ngx-toastr';
+import { ModalConfirmComponent } from '../../../shared/modal-confirm/modal-confirm.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogRef } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MaterialModule],
+  imports: [CommonModule, MaterialModule,ModalConfirmComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -35,7 +38,8 @@ export default class HomeComponent {
   constructor(
     private heroService: HeroesService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialog: MatDialog
   ) {}
   ngAfterViewInit(): void {
     this.heroService.getHeroes().subscribe({
@@ -70,5 +74,21 @@ export default class HomeComponent {
   deleteHero(index: number, name: string) {
     this.heroService.deleteHero(index);
     this.toastr.success(`Hero ${name} deleted`, 'Hero deleted');
+  }
+
+  openDialog(index: number, name: string): void {
+    const dialogRef =this.dialog.open(ModalConfirmComponent, {
+      width: '250px',
+      enterAnimationDuration:'200ms',
+      exitAnimationDuration:'200ms',
+      data:{name:name}
+    });
+    dialogRef.afterClosed().subscribe({
+      next:(result)=>{
+        if(result){
+          this.deleteHero(index,name);
+        }
+      }
+    })
   }
 }
