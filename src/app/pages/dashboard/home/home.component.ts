@@ -8,6 +8,7 @@ import { MaterialModule } from '../../../shared/material/material.module';
 import { HeroesService } from '../../../shared/service/heroes.service';
 import { Router } from '@angular/router';
 import { RouterPathNames } from '../../../enum/router-path-names';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,11 @@ export default class HomeComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private heroService: HeroesService,private router: Router ) {}
+  constructor(
+    private heroService: HeroesService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
   ngAfterViewInit(): void {
     this.heroService.getHeroes().subscribe({
       next: (response) => {
@@ -54,7 +59,12 @@ export default class HomeComponent {
     }
   }
 
-  redirectToCreateHero(){
-    this.router.navigate([`/${RouterPathNames.createHero}`])
+  redirectToCreateHero() {
+    this.router.navigate([`/${RouterPathNames.createHero}`]);
+  }
+
+  deleteHero(index: number, name: string) {
+    this.heroService.deleteHero(index);
+    this.toastr.success(`Hero ${name} deleted`, 'Hero deleted');
   }
 }
