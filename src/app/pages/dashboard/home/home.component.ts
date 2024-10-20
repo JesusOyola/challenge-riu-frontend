@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Hero } from '../../../shared/interface/hero';
 import { MaterialModule } from '../../../shared/material/material.module';
 import { HeroesService } from '../../../shared/service/heroes.service';
+import { Router } from '@angular/router';
+import { RouterPathNames } from '../../../enum/router-path-names';
 
 @Component({
   selector: 'app-home',
@@ -29,7 +31,7 @@ export default class HomeComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private heroService: HeroesService) {}
+  constructor(private heroService: HeroesService,private router: Router ) {}
   ngAfterViewInit(): void {
     this.heroService.getHeroes().subscribe({
       next: (response) => {
@@ -50,5 +52,9 @@ export default class HomeComponent {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  redirectToCreateHero(){
+    this.router.navigate([`/${RouterPathNames.createHero}`])
   }
 }
