@@ -29,6 +29,17 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'edit-hero',
+    loadComponent: () => import('../app/pages/dashboard/dashboard.component'),
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('../app/pages/dashboard/edit-hero/edit-hero.component'),
+      },
+    ],
+  },
+  {
     path: '',
     pathMatch: 'full',
     redirectTo: 'login',

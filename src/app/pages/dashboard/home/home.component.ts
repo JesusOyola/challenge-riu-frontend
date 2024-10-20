@@ -62,6 +62,10 @@ export default class HomeComponent {
   redirectToCreateHero() {
     this.router.navigate([`/${RouterPathNames.createHero}`]);
   }
+  redirectToEditHero(hero:Hero) {
+    this.heroService.heroData.set(hero);
+    this.router.navigate([`/${RouterPathNames.editHero}`]);
+  }
 
   deleteHero(index: number, name: string) {
     this.heroService.deleteHero(index);

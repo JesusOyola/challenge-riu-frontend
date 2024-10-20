@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { Hero } from '../interface/hero';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -7,8 +7,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class HeroesService {
   private heroesList: Hero[] = this.getHeroesFromLocalStorage();
-
   private heroes$ = new BehaviorSubject<Hero[]>(this.heroesList);
+  heroData: WritableSignal<Hero> = signal({
+    id: 0,
+    superhero: '',
+    publisher: '',
+    alter_ego: '',
+    first_appearance: '',
+    characters: '',
+  });
   private saveHeroesToLocalStorage() {
     localStorage.setItem('heroes', JSON.stringify(this.heroesList));
   }
