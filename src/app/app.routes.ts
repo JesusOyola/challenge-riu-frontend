@@ -18,6 +18,17 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'create-hero',
+    loadComponent: () => import('../app/pages/dashboard/dashboard.component'),
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('../app/pages/dashboard/create-hero/create-hero.component'),
+      },
+    ],
+  },
+  {
     path: '',
     pathMatch: 'full',
     redirectTo: 'login',

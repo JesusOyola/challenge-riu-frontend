@@ -8,10 +8,13 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCardModule} from '@angular/material/card';
+
+
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule,MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule],
-  exports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule,MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule],
+  imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule,MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule,MatCardModule],
+  exports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule,MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule,MatCardModule],
 })
 export class MaterialModule {}
