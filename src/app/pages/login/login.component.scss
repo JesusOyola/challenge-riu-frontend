@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f5f5f5;
+  background: linear-gradient(90deg, #a8a3d4,#a08db9,#342360);
   height: 100%;
 }
 
@@ -15,4 +15,7 @@
   max-width: 300px;
   width: 100%;
   text-align: center;
+}
+.btn-lg{
+  cursor: pointer;
 }
