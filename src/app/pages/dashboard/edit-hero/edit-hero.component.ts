@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -16,18 +16,16 @@ import { UppercaseDirective } from '../../../shared/uppercase.directive';
 @Component({
   selector: 'app-edit-hero',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule,UppercaseDirective],
+  imports: [MaterialModule, ReactiveFormsModule, UppercaseDirective],
   templateUrl: './edit-hero.component.html',
   styleUrl: './edit-hero.component.scss',
 })
 export default class EditHeroComponent {
   heroForm!: FormGroup;
-  constructor(
-    private fb: FormBuilder,
-    private heroesService: HeroesService,
-    private router: Router,
-    private toastr: ToastrService
-  ) {}
+  fb = inject(FormBuilder);
+  heroesService = inject(HeroesService);
+  router = inject(Router);
+  toastr = inject(ToastrService);
 
   ngOnInit(): void {
     const heroToEdit: Hero = this.heroesService.heroData();
@@ -46,8 +44,8 @@ export default class EditHeroComponent {
       const heroName = this.heroForm.value.superhero.toUpperCase();
       const heroData = {
         ...this.heroForm.value,
-        superhero: heroName
-      }
+        superhero: heroName,
+      };
       this.heroesService.editHero(heroData);
       this.toastr.success(
         `Hero ${this.heroForm.controls['superhero'].value} Updated`,

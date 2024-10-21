@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -21,13 +21,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  fb = inject(FormBuilder);
+  loginService = inject(LoginService);
+  router = inject(Router);
+  toastr = inject(ToastrService);
 
-  constructor(
-    private readonly fb: FormBuilder,
-    private toastr: ToastrService,
-    private router: Router,
-    private loginService: LoginService
-  ) {}
   ngOnInit(): void {
     this.loginForm = this.initForm();
   }

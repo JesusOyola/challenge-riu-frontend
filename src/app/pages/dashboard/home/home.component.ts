@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,11 +12,12 @@ import { ToastrService } from 'ngx-toastr';
 import { ModalConfirmComponent } from '../../../shared/modal-confirm/modal-confirm.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogRef } from '@angular/cdk/dialog';
+import { TruncatePipe } from '../../../shared/pipe/truncate.pipe';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MaterialModule,ModalConfirmComponent],
+  imports: [CommonModule, MaterialModule, ModalConfirmComponent, TruncatePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -35,12 +36,10 @@ export default class HomeComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(
-    private heroService: HeroesService,
-    private router: Router,
-    private toastr: ToastrService,
-    public dialog: MatDialog
-  ) {}
+  heroService = inject(HeroesService);
+  router = inject(Router);
+  toastr = inject(ToastrService);
+  constructor(public dialog: MatDialog) {}
   ngAfterViewInit(): void {
     this.heroService.getHeroes().subscribe({
       next: (response) => {
@@ -66,7 +65,7 @@ export default class HomeComponent {
   redirectToCreateHero() {
     this.router.navigate([`/${RouterPathNames.createHero}`]);
   }
-  redirectToEditHero(hero:Hero) {
+  redirectToEditHero(hero: Hero) {
     this.heroService.heroData.set(hero);
     this.router.navigate([`/${RouterPathNames.editHero}`]);
   }
@@ -77,18 +76,18 @@ export default class HomeComponent {
   }
 
   openDialog(index: number, name: string): void {
-    const dialogRef =this.dialog.open(ModalConfirmComponent, {
+    const dialogRef = this.dialog.open(ModalConfirmComponent, {
       width: '250px',
-      enterAnimationDuration:'200ms',
-      exitAnimationDuration:'200ms',
-      data:{name:name}
+      enterAnimationDuration: '200ms',
+      exitAnimationDuration: '200ms',
+      data: { name: name },
     });
     dialogRef.afterClosed().subscribe({
-      next:(result)=>{
-        if(result){
-          this.deleteHero(index,name);
+      next: (result) => {
+        if (result) {
+          this.deleteHero(index, name);
         }
-      }
-    })
+      },
+    });
   }
 }

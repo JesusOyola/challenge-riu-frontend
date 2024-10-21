@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -15,18 +15,16 @@ import { UppercaseDirective } from '../../../shared/uppercase.directive';
 @Component({
   selector: 'app-create-hero',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule,UppercaseDirective],
+  imports: [MaterialModule, ReactiveFormsModule, UppercaseDirective],
   templateUrl: './create-hero.component.html',
   styleUrl: './create-hero.component.scss',
 })
 export default class CreateHeroComponent implements OnInit {
   heroForm!: FormGroup;
-  constructor(
-    private fb: FormBuilder,
-    private heroesService: HeroesService,
-    private router: Router,
-    private toastr: ToastrService
-  ) {}
+  fb = inject(FormBuilder);
+  heroesService = inject(HeroesService);
+  router = inject(Router);
+  toastr = inject(ToastrService);
 
   ngOnInit(): void {
     this.heroForm = this.fb.group({
@@ -44,8 +42,8 @@ export default class CreateHeroComponent implements OnInit {
       const heroName = this.heroForm.value.superhero.toUpperCase();
       const heroData = {
         ...this.heroForm.value,
-        superhero: heroName
-      }
+        superhero: heroName,
+      };
       this.heroesService.createHero(heroData);
       this.toastr.success(
         `Hero ${this.heroForm.controls['superhero'].value} Created`,
