@@ -55,7 +55,10 @@ describe('LoginComponent', () => {
   });
 
   it('should set the user and navigate on successful login', () => {
-    component.loginForm.setValue({ email: 'test@example.com', password: '123' });
+    component.loginForm.setValue({
+      email: 'test@example.com',
+      password: '123',
+    });
     spyOn(localStorage, 'getItem').and.returnValue(null);
     spyOn(localStorage, 'setItem');
 
@@ -63,10 +66,9 @@ describe('LoginComponent', () => {
 
     expect(mockLoginService.setUser).toHaveBeenCalledWith('test@example.com');
     expect(mockToastrService.success).toHaveBeenCalledWith(
-      'User test@example.com created',
+      'User test@example.com created, please enter your credentials again to LogIn',
       'User created'
     );
-    expect(mockRouter.navigate).toHaveBeenCalledWith([`/${RouterPathNames.home}`]);
   });
 
   it('should warn on invalid credentials', () => {
@@ -80,4 +82,3 @@ describe('LoginComponent', () => {
     );
   });
 });
-

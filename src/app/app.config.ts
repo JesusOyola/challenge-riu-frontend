@@ -8,7 +8,7 @@ import { provideToastr } from 'ngx-toastr';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(), provideAnimations(),provideToastr({timeOut: 2000,
+  providers: [provideRouter(routes), provideClientHydration(), provideAnimations(),provideToastr({timeOut: 5000,
     positionClass: 'toast-bottom-right',
     preventDuplicates: true,}), provideAnimationsAsync(),]
 };

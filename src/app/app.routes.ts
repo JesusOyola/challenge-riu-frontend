@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { loginGuard } from './core/guards/login.guard';
 
 export const routes: Routes = [
   {
@@ -9,6 +10,7 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('../app/pages/dashboard/dashboard.component'),
+    canActivate:[loginGuard],
     children: [
       {
         path: '',
@@ -20,6 +22,7 @@ export const routes: Routes = [
   {
     path: 'create-hero',
     loadComponent: () => import('../app/pages/dashboard/dashboard.component'),
+    canActivate:[loginGuard],
     children: [
       {
         path: '',
@@ -31,6 +34,7 @@ export const routes: Routes = [
   {
     path: 'edit-hero',
     loadComponent: () => import('../app/pages/dashboard/dashboard.component'),
+    canActivate:[loginGuard],
     children: [
       {
         path: '',

@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private toastr: ToastrService,
-   private router: Router, 
+    private router: Router,
     private loginService: LoginService
   ) {}
   ngOnInit(): void {
@@ -55,13 +55,17 @@ export class LoginComponent implements OnInit {
         userTransformData
       );
       this.loginService.setUser(this.loginForm.get('email')?.value);
+      localStorage.setItem(
+        'token',
+        `${this.loginForm.get('email')?.value}${
+          this.loginForm.get('password')?.value
+        }`
+      );
       this.toastr.success(
-        `User ${this.loginForm.controls['email'].value} created`,
+        `User ${this.loginForm.controls['email'].value} created, please enter your credentials again to LogIn`,
         'User created'
       );
-      this.loginForm.reset()
-
-      this.router.navigate([`/${RouterPathNames.home}`]);
+      this.loginForm.reset();
     } else if (!this.loginForm.invalid && userAlreadyCreate !== null) {
       this.loginService.setUser(this.loginForm.get('email')?.value);
       this.toastr.success(
@@ -70,7 +74,7 @@ export class LoginComponent implements OnInit {
       );
 
       this.router.navigate([`/${RouterPathNames.home}`]);
-    }else {
+    } else {
       this.toastr.warning(
         `Verify that your email and password are correct.`,
         'Invalid Credentials'
