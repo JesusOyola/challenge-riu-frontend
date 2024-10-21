@@ -22,10 +22,15 @@ module.exports = function (config:any) {
       colors: true,
       logLevel: config.LOG_INFO,
       autoWatch: true,
-      browsers: ['ChromeHeadless'], 
+      browsers: ['ChromeHeadless'], // Cambia esto a ChromeHeadless
       singleRun: false,
       restartOnFileChange: true,
+      customLaunchers: {
+        ChromeHeadless: {
+          base: 'ChromeHeadless',
+          flags: ['--no-sandbox', '--disable-gpu', '--headless'], 
+        },
+      },
     });
   };
-  
   
