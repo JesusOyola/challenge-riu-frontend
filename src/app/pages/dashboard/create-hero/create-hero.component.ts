@@ -39,7 +39,7 @@ export default class CreateHeroComponent implements OnInit {
 
   onSubmit() {
     if (this.heroForm.invalid) {
-      this.toastr.error(`Verify that all fiels are correct.`, 'Invalid Form');
+      this.toastr.error(`Verify that all fields are correct.`, 'Invalid Form');
       return;  
     }
     if (this.heroForm.valid) {

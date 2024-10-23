@@ -40,6 +40,10 @@ export default class EditHeroComponent {
   }
 
   onSubmit() {
+    if (this.heroForm.invalid) {
+      this.toastr.error(`Verify that all fields are correct.`, 'Invalid Form');
+      return;
+    }
     if (this.heroForm.valid) {
       const heroName = this.heroForm.value.superhero.toUpperCase();
       const heroData = {
@@ -52,8 +56,6 @@ export default class EditHeroComponent {
         'Hero Updated'
       );
       this.router.navigate([`/${RouterPathNames.home}`]);
-    } else {
-      this.toastr.error(`Verify that all fiels are correct.`, 'Invalid Form');
     }
   }
 }

@@ -31,10 +31,10 @@ describe('CreateHeroComponent', () => {
         MaterialModule,
         ReactiveFormsModule,
         UppercaseDirective,
-        NoopAnimationsModule, 
+        NoopAnimationsModule,
       ],
       providers: [
-        { provide: ToastrService, useValue: mockToastrService }, 
+        { provide: ToastrService, useValue: mockToastrService },
         { provide: Router, useValue: mockRouter },
         { provide: HeroesService, useValue: mockHeroesService },
       ],
@@ -44,7 +44,11 @@ describe('CreateHeroComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CreateHeroComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges(); 
+    fixture.detectChanges();
+    mockToastrService.success.calls.reset();
+    mockToastrService.error.calls.reset();
+    mockRouter.navigate.calls.reset();
+    mockHeroesService.createHero.calls.reset();
   });
 
   it('should create', () => {
@@ -84,7 +88,7 @@ describe('CreateHeroComponent', () => {
 
     expect(mockHeroesService.createHero).toHaveBeenCalledWith({
       id: '1',
-      superhero: 'BATMAN', // Uppercased by the component logic
+      superhero: 'BATMAN',
       publisher: 'DC Comics',
       alter_ego: 'Bruce Wayne',
       first_appearance: '1939',
@@ -98,8 +102,7 @@ describe('CreateHeroComponent', () => {
   });
 
   it('should show an error if the form is invalid', () => {
-    component.heroForm.setValue({
-      id: '',
+    component.heroForm.patchValue({
       superhero: '',
       publisher: '',
       alter_ego: '',
@@ -107,13 +110,17 @@ describe('CreateHeroComponent', () => {
       characters: '',
     });
 
+    expect(component.heroForm.invalid).toBeTrue();
+
     component.onSubmit();
 
+    const heroesService = TestBed.inject(HeroesService);
+    expect(heroesService.createHero).not.toHaveBeenCalled();
+    expect(mockRouter.navigate).not.toHaveBeenCalled();
+
     expect(mockToastrService.error).toHaveBeenCalledWith(
-      'Verify that all fiels are correct.',
+      'Verify that all fields are correct.',
       'Invalid Form'
     );
-    expect(mockHeroesService.createHero).not.toHaveBeenCalled();
-    expect(mockRouter.navigate).not.toHaveBeenCalled();
   });
 });
