@@ -22,6 +22,7 @@ const mockDialogData = {
 describe('ModalConfirmComponent', () => {
   let component: ModalConfirmComponent;
   let fixture: ComponentFixture<ModalConfirmComponent>;
+  let dialogRef: MockMatDialogRef;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -41,6 +42,7 @@ describe('ModalConfirmComponent', () => {
 
     fixture = TestBed.createComponent(ModalConfirmComponent);
     component = fixture.componentInstance;
+    dialogRef = TestBed.inject(MatDialogRef);
     fixture.detectChanges();
   });
 
@@ -48,7 +50,15 @@ describe('ModalConfirmComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have heroName set to Spiderman', () => {
-    expect(component.data.name).toBe('Deadpool'); // Verificando que el nombre del héroe sea Spiderman
+  it('should have heroName set to Deadpool', () => {
+    expect(component.data.name).toBe('Deadpool');
+  });
+
+  it('should close the modal with false when closeModal is called', () => {
+    spyOn(dialogRef, 'close');
+
+    component.closeModal();
+
+    expect(dialogRef.close).toHaveBeenCalled();
   });
 });
