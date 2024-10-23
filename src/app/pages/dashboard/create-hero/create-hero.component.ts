@@ -38,6 +38,10 @@ export default class CreateHeroComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.heroForm.invalid) {
+      this.toastr.error(`Verify that all fiels are correct.`, 'Invalid Form');
+      return;  
+    }
     if (this.heroForm.valid) {
       const heroName = this.heroForm.value.superhero.toUpperCase();
       const heroData = {
@@ -50,8 +54,6 @@ export default class CreateHeroComponent implements OnInit {
         'Hero Created'
       );
       this.router.navigate([`/${RouterPathNames.home}`]);
-    } else {
-      this.toastr.error(`Verify that all fiels are correct.`, 'Invalid Form');
-    }
+    } 
   }
 }

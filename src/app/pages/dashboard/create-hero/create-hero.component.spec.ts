@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { UppercaseDirective } from '../../../shared/uppercase.directive';
+import { HeroesService } from '../../../shared/service/heroes.service';
 
 const mockRouter = {
   navigate: jasmine.createSpy('navigate'),
@@ -14,6 +15,9 @@ const mockRouter = {
 const mockToastrService = {
   success: jasmine.createSpy('success'),
   error: jasmine.createSpy('error'),
+};
+const mockHeroesService = {
+  createHero: jasmine.createSpy('createHero'),
 };
 
 describe('CreateHeroComponent', () => {
@@ -32,6 +36,7 @@ describe('CreateHeroComponent', () => {
       providers: [
         { provide: ToastrService, useValue: mockToastrService }, 
         { provide: Router, useValue: mockRouter },
+        { provide: HeroesService, useValue: mockHeroesService },
       ],
     }).compileComponents();
   });
@@ -44,5 +49,71 @@ describe('CreateHeroComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should initialize the form with empty controls', () => {
+    const form = component.heroForm;
+    expect(form).toBeTruthy();
+    expect(form.controls['superhero'].value).toBe('');
+    expect(form.controls['publisher'].value).toBe('');
+  });
+
+  it('should mark form as invalid if required fields are missing', () => {
+    component.heroForm.setValue({
+      id: '',
+      superhero: '',
+      publisher: '',
+      alter_ego: '',
+      first_appearance: '',
+      characters: '',
+    });
+    expect(component.heroForm.invalid).toBeTrue();
+  });
+
+  it('should call createHero service and navigate on valid form submission', () => {
+    component.heroForm.setValue({
+      id: '1',
+      superhero: 'Batman',
+      publisher: 'DC Comics',
+      alter_ego: 'Bruce Wayne',
+      first_appearance: '1939',
+      characters: 'Bruce Wayne',
+    });
+
+    component.onSubmit();
+
+    expect(mockHeroesService.createHero).toHaveBeenCalledWith({
+      id: '1',
+      superhero: 'BATMAN', // Uppercased by the component logic
+      publisher: 'DC Comics',
+      alter_ego: 'Bruce Wayne',
+      first_appearance: '1939',
+      characters: 'Bruce Wayne',
+    });
+    expect(mockToastrService.success).toHaveBeenCalledWith(
+      'Hero Batman Created',
+      'Hero Created'
+    );
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/home']);
+  });
+
+  it('should show an error if the form is invalid', () => {
+    component.heroForm.setValue({
+      id: '',
+      superhero: '',
+      publisher: '',
+      alter_ego: '',
+      first_appearance: '',
+      characters: '',
+    });
+
+    component.onSubmit();
+
+    expect(mockToastrService.error).toHaveBeenCalledWith(
+      'Verify that all fiels are correct.',
+      'Invalid Form'
+    );
+    expect(mockHeroesService.createHero).not.toHaveBeenCalled();
+    expect(mockRouter.navigate).not.toHaveBeenCalled();
   });
 });
