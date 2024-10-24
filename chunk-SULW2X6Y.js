@@ -1,0 +1,1 @@
+import{W as a,j as r}from"./chunk-5XW4J5QZ.js";var n=(()=>{class t{constructor(){this.userData$=new r("")}getUser(){return this.userData$.asObservable()}setUser(e){this.userData$.next(e)}static{this.\u0275fac=function(s){return new(s||t)}}static{this.\u0275prov=a({token:t,factory:t.\u0275fac,providedIn:"root"})}}return t})();export{n as a};
