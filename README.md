@@ -2,6 +2,31 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.10.
 
+## Descripción del Proyecto
+
+La aplicación HeroesApp es un sistema de gestión de superhéroes que permite realizar las siguientes acciones:
+
+- Registro de usuarios con autenticación mediante email y contraseña.
+- Almacenamiento de datos en `localStorage`.
+- Búsqueda, creación, edición y eliminación de héroes.
+- Tabla paginada que muestra un listado de superhéroes con sus características.
+- La primera autenticación funciona como registro y genera un "token" necesario para proteger las rutas mediante un Guard.
+
+### Características Técnicas
+- Desarrollada en Angular 17.
+- Estructura basada en standalone components.
+- Uso de RxJS y signals.
+- Inyección de dependencias mediante constructor e inject.
+- Tests unitarios para los componentes y servicios.
+- CI/CD implementado con GitHub Actions, incluyendo un build para producción que despliega la aplicación en GitHub Pages.
+### Sitema de Login
+
+## Links Necesarios
+
+- Repositorio: [https://github.com/JesusOyola/challenge-riu-frontend]
+- URL pública de la app en producción:[https://jesusoyola.github.io/challenge-riu-frontend]
+
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

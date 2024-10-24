@@ -8,6 +8,11 @@ export const routes: Routes = [
       import('../app/pages/login/login.routes').then((m) => m.LOGIN_ROUTES),
   },
   {
+    path: 'register',
+    loadChildren: () =>
+      import('../app/pages/register/register.routes').then((m) => m.REGISTER_ROUTES),
+  },
+  {
     path: 'home',
     loadComponent: () => import('../app/pages/dashboard/dashboard.component'),
     canActivate:[loginGuard],
@@ -46,11 +51,11 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'login',
+    redirectTo: 'register',
   },
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'login',
+    redirectTo: 'register',
   },
 ];

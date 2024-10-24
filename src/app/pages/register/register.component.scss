@@ -1,0 +1,21 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(90deg, #a8a3d4,#a08db9,#342360);
+    height: 100%;
+  }
+  
+  .logo {
+    height: 130px;
+    margin-bottom: 10px;
+  }
+  
+  .body {
+    max-width: 300px;
+    width: 100%;
+    text-align: center;
+  }
+  .btn-lg{
+    cursor: pointer;
+  }

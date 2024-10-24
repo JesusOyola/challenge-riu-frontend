@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { User } from '../../core/auth/interface/user';
 import { LoginService } from '../../core/services/login.service';
 import { RouterPathNames } from '../../enum/router-path-names';
@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -38,33 +38,25 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    const userData: User = {
-      email: this.loginForm.get('email')?.value,
-      password: this.loginForm.get('password')?.value,
-    };
-    const userTransformData = JSON.stringify(userData);
     const userAlreadyCreate = localStorage.getItem(
       this.loginForm.get('email')?.value
     );
+    let user: User = {
+      email: '',
+      password: 0,
+    };
+    if (userAlreadyCreate) {
+      user = JSON.parse(userAlreadyCreate);
+      console.log(user);
+    } else {
+      console.log('No user found in localStorage for the given email.');
+    }
 
-    if (!this.loginForm.invalid && userAlreadyCreate === null) {
-      localStorage.setItem(
-        `${this.loginForm.get('email')?.value}`,
-        userTransformData
-      );
-      this.loginService.setUser(this.loginForm.get('email')?.value);
-      localStorage.setItem(
-        'token',
-        `${this.loginForm.get('email')?.value}${
-          this.loginForm.get('password')?.value
-        }`
-      );
-      this.toastr.success(
-        `User ${this.loginForm.controls['email'].value} created, please enter your credentials again to LogIn`,
-        'User created'
-      );
-      this.loginForm.reset();
-    } else if (!this.loginForm.invalid && userAlreadyCreate !== null) {
+    if (
+      !this.loginForm.invalid &&
+      this.loginForm.get('email')?.value === user.email &&
+      this.loginForm.get('password')?.value === user.password
+    ) {
       this.loginService.setUser(this.loginForm.get('email')?.value);
       this.toastr.success(
         `User ${this.loginForm.controls['email'].value} Logged`,
@@ -74,7 +66,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate([`/${RouterPathNames.home}`]);
     } else {
       this.toastr.warning(
-        `Verify that your email and password are correct.`,
+        `User not found. Please verify your credentials or create an acount`,
         'Invalid Credentials'
       );
     }

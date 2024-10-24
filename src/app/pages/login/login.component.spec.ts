@@ -4,7 +4,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoginService } from '../../core/services/login.service';
-import { RouterPathNames } from '../../enum/router-path-names'; // Ajusta la ruta si es necesario
+import { RouterPathNames } from '../../enum/router-path-names'; 
 import { provideRouter } from '@angular/router';
 
 // Mocks
@@ -27,13 +27,13 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, LoginComponent], // Se importa el componente standalone
+      imports: [ReactiveFormsModule, LoginComponent], 
       providers: [
         FormBuilder,
         { provide: Router, useValue: mockRouter },
         { provide: ToastrService, useValue: mockToastrService },
         { provide: LoginService, useValue: mockLoginService },
-        provideRouter([]), // Se provee el router si es necesario
+        provideRouter([]), 
       ],
     }).compileComponents();
   });
@@ -41,7 +41,7 @@ describe('LoginComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges(); // Detecta los cambios en el DOM
+    fixture.detectChanges(); 
   });
 
   it('should create the component', () => {
