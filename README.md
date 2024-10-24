@@ -2,30 +2,33 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.10.
 
-## Descripción del Proyecto
+## Project Description
 
-La aplicación HeroesApp es un sistema de gestión de superhéroes que permite realizar las siguientes acciones:
+The HeroesApp is a superhero management system that allows for the following actions:
 
-- Registro de usuarios con autenticación mediante email y contraseña.
-- Almacenamiento de datos en `localStorage`.
-- Búsqueda, creación, edición y eliminación de héroes.
-- Tabla paginada que muestra un listado de superhéroes con sus características.
-- La primera autenticación funciona como registro y genera un "token" necesario para proteger las rutas mediante un Guard.
+- User registration with authentication via email and password.
+- Data storage in localStorage.
+- Search, creation, editing, and deletion of heroes.
+- A paginated table displaying a list of superheroes with their characteristics.
+- The first authentication acts as registration and generates a "token" necessary to protect routes using a Guard.
 
-### Características Técnicas
-- Desarrollada en Angular 17.
-- Estructura basada en standalone components.
-- Uso de RxJS y signals.
-- Inyección de dependencias mediante constructor e inject.
-- Tests unitarios para los componentes y servicios.
-- CI/CD implementado con GitHub Actions, incluyendo un build para producción que despliega la aplicación en GitHub Pages.
-### Sitema de Login
+### Technical Features
+
+- Developed in Angular 17.
+- Structure based on standalone components.
+- Use of RxJS and signals.
+- Dependency injection through constructor and inject.
+- Unit tests for components and services.
+- CI/CD implemented with GitHub Actions, including a production build that deploys the application to GitHub Pages.
+
+### Authentication System
+
+- The application features a basic registration and login system that requires the user to enter an email and password. Upon registration, a user, password, and token are created, and these credentials are stored in localStorage. The purpose of this registration is to implement a guard that protects the routes; without registration, the token is not generated, so the guard will prevent access to any route.
 
 ## Links Necesarios
 
-- Repositorio: [https://github.com/JesusOyola/challenge-riu-frontend]
-- URL pública de la app en producción:[https://jesusoyola.github.io/challenge-riu-frontend]
-
+- Repository: [https://github.com/JesusOyola/challenge-riu-frontend]
+- Public URL production app:[https://jesusoyola.github.io/challenge-riu-frontend]
 
 ## Development server
 
